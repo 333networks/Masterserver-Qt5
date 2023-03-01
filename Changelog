@@ -1,0 +1,200 @@
+Changelog for MasterServer-Qt
+---
+
+v0.27 2022-07-19:
+  * Default to IPv4-addresses
+  * Remove unnecessary IPv4/IPv6-to-string conversions
+  * Remove similar/unnecessary log messages
+  * Solve some encoding issues
+  * Merge similar types of UDP data structs
+  * Improve readability in some comments/statements
+  * Remove explicit IPv6 serverlist request option
+  * Sync using SQLite transactions (performance)
+
+v0.26b 2022-05-17:
+  * update supportedgames with Duke Nukem Forever entry
+
+v0.26 2021-09-14:
+  * update gamenames on beacon/checker update (fix for issue #1)
+
+v0.25 2021-08-06:
+  * authenticate servers added through sync
+
+v0.24 2021-08-05:
+  * Handle refused/reset connections when syncing
+  * Part 2 for fixing "GLib-ERROR: Too many open files" implemented
+
+v0.23 2021-08-04:
+  * Fix for "GLib-ERROR: Too many open files" implemented
+  * Clean up debug symbols
+  * Optimisation for statuschecker database query
+
+v0.22 2021-04-03:
+  * Update hostport from Checker data (yeah, really)
+  * Remove duplicate/debug TCP disconnect messages
+  * Sanity checks and reduce complexity for secure/validate challenge
+  * Proper crediting for Luigi Auriemma's code
+  * Rename related log fields to "secure"
+  * Force absolute paths to config, log and settings
+
+v0.21 2021-03-27:
+  * Selective updating with Checker data
+
+v0.20 2021-03-24:
+  * Module dis/enabling from core instead of module
+  * Alter dynamics of syncing and address checking
+  * Only sync/uplink with addresses in config, not from database
+  * Add database column for update after sync
+  * Incoming sync directly to database
+  * Outgoing sync only sends updated, authenticated servers  
+  * Fixed catastrophic timer-in-a-timer bug
+  * Remove UplinkServer struct
+  * Remove PendingServers list from coreobject
+  * Seperate gameinfo function from coreobject
+  * Clear out serverchecker buffer after completion final
+  * Manually trigger readyRead signal periodically
+
+v0.19 2021-02-16:
+  * Restrict database type to SQLite only
+  * Remove database section from settings and readme
+  * Trim expert settings and internal variables
+  * Remove expert settings from readme
+
+v0.18 2021-02-16:
+  * Seperate version code from coreobject
+  * Seperate logging code from coreobject
+  * Expend cycling datatype
+  * Remove unused/separate displayEvent
+
+v0.17 2021-02-15:
+  * Use default file locations
+  * Detach loading settings from coreobject
+  * Move settings code one level up
+  * Update manual with default file locations
+
+v0.16 2021-01-13:
+  * Character encoding for proper hostnames
+  * Syncer timeout/disconnect feedback
+  * Maintenance settings
+  * Update server statistics (solves replyQuery() not showing stats)
+  * Prune direct beacons that are no longer broadcasting/direct
+  * Prune serverinfo for servers that no longer exist in the database
+  * Prune players for serverinfo that no longer exists
+  * Update manual after adding maintenance settings
+
+v0.15 2021-01-03:
+  * Removed several debug code blocks (mostly logging)
+  * Removed adding/blocking LAN/localhost addresses. Is now admin's responsibility.
+  * Order in which statuschecker queries remote gameservers
+  * Statuschecker processes playerdata too
+  * Add addresses from database to sync/uplink after StatusChecker adds them
+  * Updated manual after removing AllowLocal setting
+  * Updated manual with beaconport+1 reservation and firewall settings
+
+v0.14 2020-07-07:
+  * do not overwrite settings after loading (new settings must be added manually to config)
+  * read database version from database to prevent version mismatches
+  * integrate gameinfo table in masterserver (optimisation for web interface)
+  * update default settings from experiences so far
+  * organise code into multiple subfolders
+  * rename message types for uplinks, time-outs
+  * COPYING added to the repository
+  * ability to suppress all log messages
+  * check for local addresses
+  * add early-level stats
+
+v0.13 2020-07-01:
+  * relabel and add database columns for blacklist, authentication and server info
+  * add servers to db before auth, toggle status in db when authenticated
+  * remove trailing \final\s in heartbeats
+  * use json instead of csv to load supported games
+  * add GoneSpy as default uplink masterserver
+  * revised documentation on installing Qt5 libs (README)
+
+v0.12 2020-02-22:
+  * significant restructuring of code
+  * organise task and classes into folders
+  * pass log, settings, lists in a core object
+  * do not pass database init as object to other functions
+  * change function names to make sense
+  * restructure shared functions/structs into abstract functions/structs
+  * query other masterservers for serverlist (w/ setting)
+  * check server status and store in database (w/ setting)
+  * display build information in "mutators" query field
+  * add serverinfo and player info tables to database + creation
+  * additional settings for new functions
+  * update readme/manual to reflect changes
+
+v0.11 2019-12-03:
+  * changes in source-code only. executable is not updated.
+  * schedule querying of remote gameservers
+  * send secure- and status query to remote gameserver
+  * validate responses
+  * parse status info, but do not insert into database
+
+v0.10 2019-11-30:
+  * changes in source-code only. executable is not updated.
+  * support ipv6 address sync with msid-capable masterservers
+  * schedule syncing with remote masterservers
+  * sync with remote master (receive and parse server list)
+  
+v0.9 2019-11-22:
+  * organise udp tasks code
+  * resolve domains from uplink/sync settings
+  * change sync settings to single request for all remote hosts
+  * update manual to reflect this change
+  * send uplink to masterservers from both settings and database
+  * respond to incoming secure/validate challenges after heartbeats
+
+v0.8 2019-11-20:
+  * remove "Beta" from project name
+  * use default values while reading missing settings
+  * introduce the "Syncer" settings
+  * update manual to reflect Syncer options
+  * update settings file with Syncer defaults
+  * automatically add missing settings to file (sorts order)
+  * delete irrelevant user file
+
+v0.7 2019-11-13:
+  * cosmetic query changes
+  * identify oneself for syncing
+  * sanity checks for secure/validate
+  * ability to exempt from authing
+
+v0.6 2019-11-12:
+  * test and fix postgresql support
+  * database select query code in functions
+
+v0.5 2019-11-11:
+  * prevent double entries
+  * implement \sync\ command (oneway)
+  * correct \list\cmp implementation with appended \final\
+  * log debug events (tcp, udp) to logfile as well
+
+v0.4 2019-11-10:
+  * fix gamename override parsing
+  * allow 333networks masterserver validation
+  * add support for status, basic, info, rules query
+  * log echo messages
+  * ignore trailing queryid/final messages
+
+v0.3 2019-11-08:
+  * pass arguments by references
+  * generic primitive console/stout function
+  * many small improvements in code/functions
+  * removed TimeOut setting
+  * replace external sql files for table creation with universal internal sql queries
+  * database selection by Qt5 type instead of label from config
+  * shortened list compiling by writing cmp-data directly to output array
+  * accidentally fixed IPv6 support in the process ^
+  * TCP clients to their own class/handling
+  * always log to console (suppress with suppressDisplay= instead)
+  * default values for Settings file updated
+  * added all known games to SupportedGames.csv
+
+v0.2 2019-10-31:
+  * initial commit
+  * write readme.md
+  * fix relative path when calling from other dir
+  * suppressDisplay/Log now do as described
+  * split Core init() and run() in separate files
