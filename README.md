@@ -1,9 +1,11 @@
-# Master Server Qt5/C++
+# 333Networks Master Server Qt5/C++
 ---
 
 ## DESCRIPTION
 Qt5/C++ implementation of the 333networks masterserver for the Gamespy v0 protocol. The
 software receives UDP beacons from game servers and provides TCP server lists for game clients. The masterserver queries other masterservers to synchronise lists and checks individual game servers for additional display information.
+
+NOTE: This is an unoffical repo for the 333networks masterserver backend. Official repo is up on (https://code.333networks.com/333networks/MasterServer-Qt5) 
 
 This is a work in progress. Please join us on [discord](https://discord.gg/qbbTaGA) and participate in one or more of the workgroups or consider making a donation.
 
@@ -141,7 +143,7 @@ The following issues are known to us and do not to be reported:
 * This README is elaborate and long and should be spliced to a decent user manual.
 
 ## COPYING
-Copyright (c) 2021 Darkelarious & 333networks  
+Copyright (c) 2023 Darkelarious & 333networks  
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 "Software"), to deal in the Software without restriction, including
