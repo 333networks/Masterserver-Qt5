@@ -34,6 +34,7 @@ SOURCES += \
         Logger/logger.cpp \
         Logger/openlogfile.cpp \
         Logger/writelogfile.cpp \
+        Protocols/enctype2.cpp \
         Settings/loadsettings.cpp \
         Settings/writesettings.cpp \
         Core/core.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     Core/GameInfo/loadsupportedgames.h \
     Logger/logger.h \
     Logger/logprimitive.h \
+    Protocols/enctype2.h \
     Settings/loadsettings.h \
     Settings/settingstructure.h \
     Core/core.h \

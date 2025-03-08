@@ -1,6 +1,13 @@
 Changelog for MasterServer-Qt
 ---
 
+v0.27 hotfix 3 2025-03-01:
+  * Expand protocol with 3rd party enctype2 code
+  * Support for Medal of Honor franchise
+  
+v0.27 hotfix 1 & 2 2024-22-01:
+  * Add overrides for Undying and Mobile Forces
+
 v0.27 2022-07-19:
   * Default to IPv4-addresses
   * Remove unnecessary IPv4/IPv6-to-string conversions

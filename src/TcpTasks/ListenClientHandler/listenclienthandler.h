@@ -9,6 +9,7 @@
 #include "Database/Common/commonactions.h"
 
 #include "Protocols/GameSpy0/gamespy0.h"
+#include "protocols/enctype2.h"
 #include "Protocols/GameSpy0/securevalidate.h"
 
 class ListenClientHandler : public QObject
@@ -26,6 +27,7 @@ private:
     QTimer                      _timeOut;
     QString                     _rxBuffer = "";
     bool                        _hasValidated = false;
+    bool                        _requestEnctype2 = false;
 
     QString _clientLabel;
     QString _secure;
