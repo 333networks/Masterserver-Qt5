@@ -31,29 +31,43 @@ bool StatusChecker::insertPlayerInfo(const QString                 &serverAddres
     if ( ! q.exec() )
         return reportQuery(q);
 
-    // iterate through serverInfo player data
-    int playerIndex = 0;
-    while ( serverInfo.contains( QStringLiteral("player_%1").arg(playerIndex) ) )
-    {
-        QString insertString = "INSERT INTO playerinfo "
-                               "(sid, name, team, frags, mesh, skin, face, ping, misc, dt_player) "
-                               "VALUES (:sid, :name, :team, :frags, :mesh, :skin, :face, :ping, :misc, :dt_player)";
-        q.prepare(insertString);
-        q.bindValue(":sid",   serverID);
-        q.bindValue(":name",  serverInfo.value(QStringLiteral("player_%1").arg(playerIndex), "Player"));
-        q.bindValue(":team",  serverInfo.value(QStringLiteral(  "team_%1").arg(playerIndex), "0"));
-        q.bindValue(":frags", serverInfo.value(QStringLiteral( "frags_%1").arg(playerIndex), "0"));
-        q.bindValue(":mesh",  serverInfo.value(QStringLiteral(  "mesh_%1").arg(playerIndex), "default"));
-        q.bindValue(":skin",  serverInfo.value(QStringLiteral(  "skin_%1").arg(playerIndex), "default"));
-        q.bindValue(":face",  serverInfo.value(QStringLiteral(  "face_%1").arg(playerIndex), "default"));
-        q.bindValue(":ping",  serverInfo.value(QStringLiteral(  "ping_%1").arg(playerIndex), "0"));
-        q.bindValue(":misc",  ""); // reserved for additional query info
-        q.bindValue(":dt_player", QDateTime::currentSecsSinceEpoch() );
-        if ( ! q.exec() )
-            return reportQuery(q);
+    // hotfix 4: some player data may be missing intermittently (e.g player 1, 2, 4, 5 )
 
-        // successfull insert, increase player index
-        playerIndex++;
+    // regex to find player_%d
+    static QRegularExpression p_regex("player_(\\d+)");
+
+    // iterate all serverinfo fields for player_%d
+    QHashIterator<QString, QString> infoIterator(serverInfo);
+    while ( infoIterator.hasNext() )
+    {
+        infoIterator.next();
+
+        // match player id in player_%d
+        QRegularExpressionMatch p_match = p_regex.match( infoIterator.key() );
+        if ( p_match.hasMatch()  )
+        {
+            // extract the player_id from matched string
+            QString playerIndexString = p_match.captured(0);
+            int playerIndex = playerIndexString.remove("player_").toInt();
+
+            // and insert the whole player dataset into the db (no sanity check needed, to defaults)
+            QString insertString = "INSERT INTO playerinfo "
+                                   "(sid, name, team, frags, mesh, skin, face, ping, misc, dt_player) "
+                                   "VALUES (:sid, :name, :team, :frags, :mesh, :skin, :face, :ping, :misc, :dt_player)";
+            q.prepare(insertString);
+            q.bindValue(":sid",   serverID);
+            q.bindValue(":name",  serverInfo.value(QStringLiteral("player_%1").arg(playerIndex), "Player"));
+            q.bindValue(":team",  serverInfo.value(QStringLiteral(  "team_%1").arg(playerIndex), "0"));
+            q.bindValue(":frags", serverInfo.value(QStringLiteral( "frags_%1").arg(playerIndex), "0"));
+            q.bindValue(":mesh",  serverInfo.value(QStringLiteral(  "mesh_%1").arg(playerIndex), "default"));
+            q.bindValue(":skin",  serverInfo.value(QStringLiteral(  "skin_%1").arg(playerIndex), "default"));
+            q.bindValue(":face",  serverInfo.value(QStringLiteral(  "face_%1").arg(playerIndex), "default"));
+            q.bindValue(":ping",  serverInfo.value(QStringLiteral(  "ping_%1").arg(playerIndex), "0"));
+            q.bindValue(":misc",  ""); // reserved for additional query info
+            q.bindValue(":dt_player", QDateTime::currentSecsSinceEpoch() );
+            if ( ! q.exec() )
+                return reportQuery(q);
+        } // hasMatch
     }
 
     return true;

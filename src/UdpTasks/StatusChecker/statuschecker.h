@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QUdpSocket>
 #include <QNetworkDatagram>
+#include <QRegularExpression>
 
 #include "Core/CoreObject/coreobject.h"
 #include "Database/Common/commonactions.h"

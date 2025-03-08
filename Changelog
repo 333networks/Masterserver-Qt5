@@ -1,5 +1,8 @@
 Changelog for MasterServer-Qt
 ---
+v0.27 hotfix 4 2025-03-06:
+  * Parse serverinfo differently to handle player gaps
+  * SQL query optimisation for stats
 
 v0.27 hotfix 3 2025-03-01:
   * Expand protocol with 3rd party enctype2 code

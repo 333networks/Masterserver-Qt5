@@ -18,36 +18,23 @@ int Maintenance::updateStats()
         // get next gamename
         QString gamename = gamenameQuery.value(0).toString();
 
-        // determine beacon and server counts
-        QString selectStats = "SELECT COUNT(CASE WHEN f_direct THEN 1 END) AS num_direct, "
-                                                                 "count(*) AS num_total "
-                              "FROM serverlist "
-                              "WHERE gamename = :gamename AND dt_updated > :timestamp";
+        // hotfix hf4
+        // update number of servers directly
+        QString numStatsAll = "UPDATE gameinfo "
+                              "SET num_total = ( "
+                                "SELECT COUNT(gamename) FROM serverlist "
+                                "WHERE gamename = :gamename AND dt_updated > :timestamp "
+                              "), "
+                              "num_direct = ( "
+                                "SELECT COUNT(gamename) FROM serverlist "
+                                "WHERE gamename = :gamename AND dt_updated > :timestamp AND f_direct"
+                              ") WHERE gamename = :gamename";
+
         QSqlQuery statQuery;
-        statQuery.prepare(selectStats);
+        statQuery.prepare(numStatsAll);
         statQuery.bindValue(":gamename", gamename);
         statQuery.bindValue(":timestamp", QDateTime::currentDateTime()
-                            .addSecs(-_coreObject->Settings.ListenServerSettings.serverttl_s).toSecsSinceEpoch());
-        if ( ! statQuery.exec() )
-            return reportQuery(statQuery);
-
-        // get values
-        int num_direct = -1;
-        int num_total  = -1;
-        if ( statQuery.next() )
-        {
-            num_direct = statQuery.value("num_direct").toInt();
-            num_total  = statQuery.value("num_total").toInt();
-        }
-
-        // write to db
-        QString updateStatQuery = "UPDATE gameinfo "
-                                  "SET num_direct = :num_direct, num_total = :num_total "
-                                  "WHERE gamename = :gamename ";
-        statQuery.prepare(updateStatQuery);
-        statQuery.bindValue(":num_direct", num_direct);
-        statQuery.bindValue(":num_total", num_total);
-        statQuery.bindValue(":gamename", gamename);
+                                              .addSecs(-_coreObject->Settings.ListenServerSettings.serverttl_s).toSecsSinceEpoch());
         if ( ! statQuery.exec() )
             return reportQuery(statQuery);
 
