@@ -37,6 +37,10 @@ void ListenClientHandler::onListenClientRead()
                              ? receiveData.values("gamename").takeLast() // removes duplicate gamename
                              : receiveData.value("gamename","") );
 
+        // enctype2 list requested?
+         _requestEnctype2 = ( receiveData.value("enctype","0").compare("2") == 0 );
+        _coreObject->Log.logEvent("debug", QStringLiteral("%1 uses enctype2 = (%2)").arg(_clientLabel, QString::number(_requestEnctype2)));
+
         // sanity check
         if ( _coreObject->SupportedGames.contains(gamename) )
         {
@@ -91,13 +95,49 @@ void ListenClientHandler::onListenClientRead()
             return;
         }
 
-        // get list from db and send it
+        // get list from db
         QByteArray writeBuffer = compileServerlist(
                                         receiveData.value("gamename", ""),
                                         _coreObject->Settings.ListenServerSettings.serverttl_s,
                                         (receiveData.value("list","").compare("cmp", Qt::CaseInsensitive) == 0 ));
-        _tcpSocket->write(writeBuffer);
-        _coreObject->Log.logEvent("list", QStringLiteral("%1 received the list for %2").arg(_clientLabel, receiveData.value("gamename", "")));
+
+        // encrypt with enctype2 if requested
+        if ( _requestEnctype2 )
+        {
+            // more debug
+            _coreObject->Log.logEvent("debug", QStringLiteral("%1 requests enctype2 (%2)").arg(_clientLabel, QString::number(_requestEnctype2)));
+
+            // combined queries provide two gamenames: one for authentication and one for list request.
+            QString gamename = ( receiveData.values("gamename").size() >= 2
+                                    ? receiveData.values("gamename").takeLast() // removes duplicate gamename
+                                    : receiveData.value("gamename","") );
+
+            // datatype conversions
+            int newLen = writeBuffer.length() + 15;
+            unsigned char* encBuf = new unsigned char[ newLen ];
+            unsigned char* secKey = new unsigned char[ 7 ]; // 6 bytes long, no string terminator
+            memcpy(encBuf, writeBuffer.constData(), writeBuffer.length()); // original len, 15 byte uninitialised
+            if ( _coreObject->SupportedGames.contains( gamename ) )
+            {
+                QByteArray baSecKey = _coreObject->SupportedGames.value(gamename).cipher.toLatin1();
+                baSecKey.append('\0');
+                memcpy(secKey, baSecKey, 6); // what if baSecKey < 6? :skull:
+            }
+
+            // encrypt the buffer
+            enctype2_encoder(secKey, encBuf, writeBuffer.length() );
+
+            // convert back to byte array
+            QByteArray writeBuf = QByteArray((const char*)encBuf, newLen);
+
+            _tcpSocket->write(writeBuf);
+            _coreObject->Log.logEvent("list", QStringLiteral("%1 received the enctype2 list for %2").arg(_clientLabel, receiveData.value("gamename", "")));
+        }
+        else
+        {
+            _tcpSocket->write(writeBuffer);
+            _coreObject->Log.logEvent("list", QStringLiteral("%1 received the list for %2").arg(_clientLabel, receiveData.value("gamename", "")));
+        }
 
         // all done
         this->disconnect();
