@@ -54,22 +54,14 @@ bool initDatabase(const QString applicationPath)
         }
     }
 
-    // specifying AUTO_CREATE_DB=y in the environment allows bypassing of the interactive prompt for non-interactive environments
-    if (qgetenv("AUTO_CREATE_DB") != "y")
-    {
-        // relevant tables do not exist. ask to generate.
-        logPrimitive() << "The database tables do not exist. Do you want to generate these? [y/N]" << endl;
+    // relevant tables do not exist. ask to generate.
+    logPrimitive() << "The database table do not exist. Do you want to generate these? [y/N]" << endl;
 
-        // if no, do not proceed.
-        if ( ! QTextStream(stdin).readLine().startsWith("y") )
-        {
-            // do not generate. failed to load database.
-            return false;
-        }
-    }
-    else
+    // if no, do not proceed.
+    if ( ! QTextStream(stdin).readLine().startsWith("y") )
     {
-        logPrimitive() << "The database tables do not exist and will now be created." << endl;
+        // do not generate. failed to load database.
+        return false;
     }
 
     // create tables and proceed

@@ -5,11 +5,9 @@
 Qt5/C++ implementation of the 333networks masterserver for the Gamespy v0 protocol. The
 software receives UDP beacons from game servers and provides TCP server lists for game clients. The masterserver queries other masterservers to synchronise lists and checks individual game servers for additional display information.
 
-NOTE: This is an unoffical repo for the 333networks masterserver backend. Official repo is up on (https://code.333networks.com/333networks/MasterServer-Qt5) 
+NOTE: This is the GitHub mirror/copy for the 333networks masterserver backend. Check 333networks.com for the latest version. This is a work in progress. Please join us on [discord](https://333networks.com/discord) and participate in one or more of the workgroups or consider making a donation.
 
-This is a work in progress. Please join us on [discord](https://discord.gg/qbbTaGA) and participate in one or more of the workgroups or consider making a donation.
-
-Website: [http://333networks.com](http://333networks.com)
+Website: [https://333networks.com](https://333networks.com)
 
 ## INSTALL
 The masterserver requires the Qt5 library v5.9.5 or above to run. On linux, these binaries are available through the repository as `qt5-default` or `qt5-base`. For example, on Debian/Ubuntu, you can install the libraries through `sudo apt-get install qt5-default`.  
@@ -135,7 +133,7 @@ Game support depends on the protocol and the authentication data that is provide
 The `BeaconPort` (UDP, default 27900) and `ListenPort` (TCP, default 28900) require port forwarding in order to be reached. The `BeaconPort +1` (UDP) is kept reserved for the masterserver, but does not require forwarding.
 
 ## RUNNING
-Start the program `./MasterServer-linux-amd64` from the `bin` folder in console or terminal. Linux users may have to set execution permissions with `chmod +x MasterServer-linux-amd64` first.
+Start the program `./MasterServer-Qt5` from the `bin` folder in console or terminal. Linux users may have to set execution permissions with `chmod +x MasterServer-Qt5` first. Executable names may vary depending on the build.
 
 ## KNOWN ISSUES
 The following issues are known to us and do not to be reported:
@@ -143,7 +141,7 @@ The following issues are known to us and do not to be reported:
 * This README is elaborate and long and should be spliced to a decent user manual.
 
 ## COPYING
-Copyright (c) 2023 Darkelarious & 333networks  
+Copyright (c) 2025 Darkelarious & 333networks  
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 "Software"), to deal in the Software without restriction, including
