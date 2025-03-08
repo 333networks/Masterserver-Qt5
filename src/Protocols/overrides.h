@@ -55,12 +55,16 @@ const QStringList _overrideValidateBeacon
     "deusex",
     "rune",
     "wot",
+    "undying",
+    "mobileforces",
 };
 
 const QStringList _overrideValidateClient
 {
   "deusex",
   "wot",
+  "undying",
+  "mobileforces",
 };
 
 // matching regexes

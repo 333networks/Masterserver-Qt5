@@ -29,7 +29,7 @@
 #define BUILD_VERSION QString("0.27")
 
 // short version (in query) -- Qt v0.n
-#define SHORT_VER QString("Qt-" + BUILD_VERSION)
+#define SHORT_VER QString("Qt-" + BUILD_VERSION + "hf2")
 
 // build time/date
 #define BUILD_TIME QStringLiteral("%1 %2").arg(__DATE__).arg(__TIME__)
