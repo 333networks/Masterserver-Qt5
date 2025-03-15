@@ -9,7 +9,7 @@
 #include "Database/Common/commonactions.h"
 
 #include "Protocols/GameSpy0/gamespy0.h"
-#include "protocols/enctype2.h"
+#include "Protocols/enctype2.h"
 #include "Protocols/GameSpy0/securevalidate.h"
 
 class ListenClientHandler : public QObject
