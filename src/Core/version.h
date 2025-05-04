@@ -26,10 +26,10 @@
 #define BUILD_TYPE QString("MasterServer Qt5")
 
 // software version (of this particular type)
-#define BUILD_VERSION QString("0.27")
+#define BUILD_VERSION QString("0.28")
 
 // short version (in query) -- Qt v0.n
-#define SHORT_VER QString("Qt-" + BUILD_VERSION + "hf4")
+#define SHORT_VER QString("Qt-" + BUILD_VERSION)
 
 // build time/date
 #define BUILD_TIME QStringLiteral("%1 %2").arg(__DATE__).arg(__TIME__)

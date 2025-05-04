@@ -1,5 +1,12 @@
 Changelog for MasterServer-Qt
 ---
+
+v0.28 2025-05-04:
+  * Fix case sensitive typo in include path
+  * Trim empty keys after queryid that caused key/value offset
+  * Loosen restraints for timeouts in TCP clients and sync
+  * Add database pragmas for WAL and timeout
+
 v0.27 hotfix 4 2025-03-06:
   * Parse serverinfo differently to handle player gaps
   * SQL query optimisation for stats

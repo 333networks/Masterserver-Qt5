@@ -9,7 +9,7 @@
 #include "Database/Common/commonactions.h"
 
 #include "Protocols/GameSpy0/gamespy0.h"
-#include "protocols/enctype2.h"
+#include "Protocols/enctype2.h"
 #include "Protocols/GameSpy0/securevalidate.h"
 
 class ListenClientHandler : public QObject
@@ -20,7 +20,7 @@ public:
                         QTcpSocket *tcpSocket);
 
 private:
-    const int _timeOutTime_ms = 7500;
+    const int _timeOutTime_ms = 15000;
 
     QSharedPointer<CoreObject> _coreObject;
     QScopedPointer<QTcpSocket>  _tcpSocket;

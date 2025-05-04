@@ -23,6 +23,10 @@ QMultiHash<QString, QString> parseGameSpy0Buffer(const QString &bufferString)
         // unify valid keys
         QString key = overrideKey( property.next().trimmed() );
 
+        // skip empty key field (can happen after queryid)
+        if ( !key.length() )
+            continue;
+
         // see if a value for this key exists
         if ( ! property.hasNext() )
             break;

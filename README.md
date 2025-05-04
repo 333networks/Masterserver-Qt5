@@ -10,7 +10,7 @@ NOTE: This is the GitHub mirror/copy for the 333networks masterserver backend. C
 Website: [https://333networks.com](https://333networks.com)
 
 ## INSTALL
-The masterserver requires the Qt5 library v5.9.5 or above to run. On linux, these binaries are available through the repository as `qt5-default` or `qt5-base`. For example, on Debian/Ubuntu, you can install the libraries through `sudo apt-get install qt5-default`.  
+The masterserver requires the Qt5 library v5.9.5 or above to run. On linux, these binaries are available through the repository as `qt5-default` or `qtbase5-dev`.
 
 After installing the Qt5 libraries, check which version is installed and active:
 ```

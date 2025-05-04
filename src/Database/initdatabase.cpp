@@ -14,9 +14,10 @@ bool initDatabase(const QString applicationPath)
         return false;
     }
 
-    // speed up SQLite with keeping journals in memory and asynchronous writing
+    // SQLite tweaks with async, wal and timeout
     dbi.exec("PRAGMA synchronous = OFF");
-    dbi.exec("PRAGMA journal_mode = MEMORY");
+    dbi.exec("PRAGMA journal_mode = WAL"); // previous: MEMORY
+    dbi.exec("PRAGMA busy_timeout = 500"); // 500ms
 
     { // check if the database was generated with this version of the software
 

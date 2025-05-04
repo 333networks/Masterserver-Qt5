@@ -20,7 +20,7 @@ public:
 
 private:
     QSharedPointer<CoreObject> _coreObject;
-    const int _timeOutTime_ms = 7500;
+    const int _timeOutTime_ms = 15000;
 
     // tcp client handles
     QTcpSocket _tcpSocket;

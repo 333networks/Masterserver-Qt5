@@ -2,7 +2,7 @@
 
 bool SyncUpdater::scheduleUpdater()
 {
-    // schedule sync X seconds apart (prevent network spikes)
+    // schedule sync X seconds apart (prevent network/cpu spikes)
     connect(&_syncTicker, &QTimer::timeout, this, &SyncUpdater::onSyncTickerAction);
     _syncTicker.setInterval( _graceTime_ms );
 

@@ -17,7 +17,7 @@ public:
 
 private:
     QSharedPointer<CoreObject> _coreObject;
-    const int _graceTime_ms = 5000;
+    const int _graceTime_ms = 30000;
 
     // update/ticker timer
     QTimer _updaterTimer;
